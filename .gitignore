@@ -1,0 +1,16 @@
+# Java / Maven
+backend/target/
+*.class
+*.log
+# IDEs
+.idea/
+.vscode/
+*.iml
+.DS_Store
+# Node / Expo
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
+# Segredos
+.env
+*.env.local
