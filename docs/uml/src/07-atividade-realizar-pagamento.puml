@@ -1,0 +1,33 @@
+@startuml
+title Diagrama de Atividades - Realizar Pagamento
+skinparam shadowing false
+skinparam defaultFontName Arial
+|Cliente|
+start
+:Escolhe a forma de pagamento;
+|Sistema|
+:Verifica se o pedido aguarda pagamento\ne não possui pagamento aprovado/pendente;
+switch (forma de pagamento?)
+case (Pix)
+  :Exige a chave Pix;
+case (Cartão)
+  :Exige os 4 últimos dígitos;
+case (Boleto)
+  :Gera o código de barras;
+endswitch
+:Processa o pagamento (valor total do pedido);
+if (pagamento aprovado?) then (sim)
+  :Atualiza o pedido para CONFIRMADO;
+  |Cliente|
+  :Recebe a confirmação do pagamento;
+else (boleto pendente)
+  :Mantém o pedido AGUARDANDO_PAGAMENTO;
+  |Cliente|
+  :Recebe o código do boleto;
+  |Vendedor|
+  :Confirma a compensação do boleto;
+  |Sistema|
+  :Aprova o pagamento e\natualiza o pedido para CONFIRMADO;
+endif
+stop
+@enduml

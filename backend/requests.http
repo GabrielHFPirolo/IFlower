@@ -1,0 +1,94 @@
+### Roteiro de teste da API (extensão "REST Client" do VS Code ou HTTP Client do IntelliJ)
+@host = http://localhost:8080
+
+### 1. Cadastro de cliente (RF001)
+POST {{host}}/api/clientes
+Content-Type: application/json
+
+{
+  "nome": "Paula Teste", "email": "paula@teste.com", "senha": "Senha@123", "telefone": "41988887777",
+  "cpf": "529.982.247-25",
+  "endereco": { "cep": "80010-000", "logradouro": "Rua XV de Novembro", "numero": "10", "bairro": "Centro", "cidade": "Curitiba", "uf": "PR" }
+}
+
+### 2. Login do cliente seed (RF002) -> copie o "token" para a variável abaixo
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "joao@iflower.com", "senha": "Senha@123" }
+
+### Cole o token do cliente aqui
+@tokenCliente = COLE_O_TOKEN_AQUI
+
+### 3. Lojas próximas (RF004) e busca por nome (RF007)
+GET {{host}}/api/lojas/proximas
+Authorization: Bearer {{tokenCliente}}
+
+###
+GET {{host}}/api/lojas?nome=primavera
+
+### 4. Produtos de uma loja
+GET {{host}}/api/lojas/1/produtos
+
+### 5. Adicionar ao carrinho (RF006) - produto 1 aceita personalização
+POST {{host}}/api/carrinho/itens
+Authorization: Bearer {{tokenCliente}}
+Content-Type: application/json
+
+{ "produtoId": 1, "quantidade": 2, "personalizacao": "Cartão: Parabéns!" }
+
+### 6. Ver carrinho
+GET {{host}}/api/carrinho
+Authorization: Bearer {{tokenCliente}}
+
+### 7. Finalizar compra (RF009/RF011/RF012) - ajuste a data para um dia futuro
+POST {{host}}/api/pedidos
+Authorization: Bearer {{tokenCliente}}
+Content-Type: application/json
+
+{ "entrega": { "tipoRetirada": "RETIRADA_NA_LOJA", "dataEntrega": "2026-12-20", "horario": "10:00" } }
+
+### 8. Pagar com Pix (RF019) - troque o id do pedido pelo retornado no passo 7
+POST {{host}}/api/pedidos/2/pagamento
+Authorization: Bearer {{tokenCliente}}
+Content-Type: application/json
+
+{ "tipo": "PIX", "chavePix": "joao@iflower.com" }
+
+### 9. Acompanhar pedido (RF010)
+GET {{host}}/api/pedidos/2
+Authorization: Bearer {{tokenCliente}}
+
+### 10. Login da vendedora (loja 1)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "ana@iflower.com", "senha": "Senha@123" }
+
+@tokenVendedor = COLE_O_TOKEN_AQUI
+
+### 11. Vendedora consulta pedidos (RF013) e atualiza status (RF015)
+GET {{host}}/api/pedidos?status=CONFIRMADO
+Authorization: Bearer {{tokenVendedor}}
+
+###
+PATCH {{host}}/api/pedidos/2/status
+Authorization: Bearer {{tokenVendedor}}
+Content-Type: application/json
+
+{ "status": "EM_PREPARO" }
+
+### 12. Cadastrar produto (RF008)
+POST {{host}}/api/produtos
+Authorization: Bearer {{tokenVendedor}}
+Content-Type: application/json
+
+{ "nome": "Margaridas", "foto": "https://exemplo.com/margaridas.jpg", "descricao": "Buquê com 20 margaridas", "preco": 79.90, "permitePersonalizacao": false }
+
+### 13. Avaliar loja (RF003) - Maria (maria@iflower.com) já tem pedido entregue na loja 1,
+###     por isso o João receberá 422 até que um pedido dele seja marcado como ENTREGUE.
+POST {{host}}/api/lojas/1/avaliacoes
+Authorization: Bearer {{tokenCliente}}
+Content-Type: application/json
+
+{ "nota": 5, "comentario": "Ótimo atendimento!" }

@@ -1,0 +1,23 @@
+@startuml
+title Diagrama de Atividades - Acompanhar Pedido
+skinparam shadowing false
+skinparam defaultFontName Arial
+|Cliente|
+start
+:Acessa a área de pedidos;
+repeat
+  :Consulta o pedido\n(número ou histórico);
+  |Sistema|
+  :Busca o pedido do cliente;
+  if (pedido encontrado?) then (não)
+    :Exibe mensagem de erro;
+  endif
+  |Cliente|
+repeat while (pedido encontrado?) is (não) not (sim)
+|Sistema|
+:Verifica o status do pedido;
+:Retorna status, itens, entrega e pagamento;
+|Cliente|
+:Visualiza as informações do pedido;
+stop
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+title Diagrama de Atividades - Realizar Pedido
+skinparam shadowing false
+skinparam defaultFontName Arial
+|Cliente|
+start
+:Acessa o carrinho de compras;
+repeat
+  :Confirma produtos e quantidades;
+  :Seleciona entrega ou retirada,\ndata e horário;
+  :Finaliza a compra;
+  |Sistema|
+  :Valida carrinho, disponibilidade\ndos produtos e data/horário;
+  if (dados válidos?) then (não)
+    :Exibe mensagem de erro;
+  endif
+  |Cliente|
+repeat while (dados válidos?) is (não) not (sim)
+|Sistema|
+:Registra o pedido (AGUARDANDO_PAGAMENTO)\ne a entrega;
+:Esvazia o carrinho;
+:Exibe o resumo do pedido (checkout);
+|Cliente|
+:Escolhe a forma de pagamento;
+|Sistema|
+:Processa o pagamento\n(ver diagrama Realizar Pagamento);
+if (pagamento aprovado?) then (sim)
+  :Atualiza o pedido para CONFIRMADO;
+else (não / boleto pendente)
+  :Mantém o pedido AGUARDANDO_PAGAMENTO;
+endif
+:Gera o número do pedido e confirma a compra;
+|Cliente|
+:Visualiza a confirmação do pedido;
+stop
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+title Diagrama de Estados - Pedido
+skinparam shadowing false
+skinparam defaultFontName Arial
+[*] --> AGUARDANDO_PAGAMENTO : finalizar compra
+AGUARDANDO_PAGAMENTO --> CONFIRMADO : pagamento aprovado
+AGUARDANDO_PAGAMENTO --> CANCELADO : cancelar
+CONFIRMADO --> EM_PREPARO : vendedor inicia preparo
+CONFIRMADO --> CANCELADO : cancelar (cliente ou vendedor)
+EM_PREPARO --> SAIU_PARA_ENTREGA : [tipo = ENTREGA]
+EM_PREPARO --> PRONTO_PARA_RETIRADA : [tipo = RETIRADA_NA_LOJA]
+EM_PREPARO --> CANCELADO : cancelar (vendedor)
+SAIU_PARA_ENTREGA --> ENTREGUE
+PRONTO_PARA_RETIRADA --> ENTREGUE
+ENTREGUE --> [*]
+CANCELADO --> [*]
+@enduml

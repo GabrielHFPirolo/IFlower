@@ -1,0 +1,179 @@
+@startuml
+title Diagrama de Classes - IFlower (modelo de domínio)
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontName Arial
+hide empty members
+
+abstract class Usuario {
+  - id: Long
+  - nome: String
+  - email: String
+  - senhaHash: String
+  - telefone: String
+  - endereco: Endereco
+  - ativo: boolean
+  + getPapel(): Papel
+  + atualizarDados(nome, telefone, endereco)
+  + desativar()
+}
+class Cliente {
+  - cpf: String
+}
+class Vendedor {
+  + vincularLoja(loja)
+}
+class Loja {
+  - id: Long
+  - nome: String
+  - descricao: String
+  - cnpj: String
+  - endereco: Endereco
+  - abertura: LocalTime
+  - fechamento: LocalTime
+  - ativa: boolean
+  + atualizarPerfil(...)
+  + aceitaHorario(horario): boolean
+}
+class Produto {
+  - id: Long
+  - nome: String
+  - foto: String
+  - descricao: String
+  - preco: BigDecimal
+  - permitePersonalizacao: boolean
+  - ativo: boolean
+  + atualizar(...)
+  + desativar()
+}
+class Carrinho {
+  - id: Long
+  + adicionarItem(produto, qtd, personalizacao)
+  + alterarQuantidade(itemId, qtd)
+  + removerItem(itemId)
+  + limpar()
+  + calcularTotal(): BigDecimal
+}
+class ItemCarrinho {
+  - id: Long
+  - quantidade: int
+  - personalizacao: String
+  + subtotal(): BigDecimal
+}
+class Pedido {
+  - id: Long
+  - dataPedido: LocalDateTime
+  - status: StatusPedido
+  - valorTotal: BigDecimal
+  + adicionarItem(item)
+  + calcularTotal(): BigDecimal
+  + confirmarPagamento()
+  + atualizarStatus(novo)
+  + cancelar()
+}
+class ItemPedido {
+  - id: Long
+  - quantidade: int
+  - precoUnitario: BigDecimal
+  - personalizacao: String
+  + subtotal(): BigDecimal
+}
+class Entrega {
+  - id: Long
+  - dataEntrega: LocalDate
+  - horario: LocalTime
+  - tipoRetirada: TipoRetirada
+  - enderecoEntrega: Endereco
+  - selecionada: boolean
+  - cancelada: boolean
+  + selecionarEntrega()
+  + cancelar()
+}
+interface Pagamento {
+  + processarPagamento(valor)
+  + getTipo(): TipoPagamento
+}
+abstract class PagamentoBase {
+  - id: Long
+  - valor: BigDecimal
+  - status: StatusPagamento
+  - dataPagamento: LocalDateTime
+}
+class PagamentoPix {
+  - chavePix: String
+}
+class PagamentoCartao {
+  - ultimosDigitos: String
+}
+class PagamentoBoleto {
+  - codigoBarras: String
+  + confirmarCompensacao()
+}
+class Avaliacao {
+  - id: Long
+  - nota: int
+  - comentario: String
+  - dataAvaliacao: LocalDateTime
+  + editar(nota, comentario)
+}
+class Endereco <<valor>> {
+  - cep: String
+  - logradouro: String
+  - numero: String
+  - bairro: String
+  - cidade: String
+  - uf: String
+}
+
+enum Papel {
+  CLIENTE
+  VENDEDOR
+}
+enum StatusPedido {
+  AGUARDANDO_PAGAMENTO
+  CONFIRMADO
+  EM_PREPARO
+  SAIU_PARA_ENTREGA
+  PRONTO_PARA_RETIRADA
+  ENTREGUE
+  CANCELADO
+}
+enum StatusPagamento {
+  PENDENTE
+  APROVADO
+  RECUSADO
+}
+enum TipoRetirada {
+  ENTREGA
+  RETIRADA_NA_LOJA
+}
+enum TipoPagamento {
+  PIX
+  CARTAO
+  BOLETO
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Vendedor
+Vendedor "1" -- "1" Loja : possui
+Loja "1" -- "0..*" Produto : oferece
+Cliente "1" -- "0..1" Carrinho : tem
+Carrinho "1" *-- "0..*" ItemCarrinho
+ItemCarrinho "0..*" --> "1" Produto
+Carrinho "0..*" --> "0..1" Loja : loja atual
+Cliente "1" -- "0..*" Pedido : realiza
+Loja "1" -- "0..*" Pedido : recebe
+Pedido "1" *-- "1..*" ItemPedido
+ItemPedido "0..*" --> "1" Produto
+Pedido "1" *-- "1" Entrega
+Pedido "1" o-- "0..*" PagamentoBase
+Pagamento <|.. PagamentoBase
+PagamentoBase <|-- PagamentoPix
+PagamentoBase <|-- PagamentoCartao
+PagamentoBase <|-- PagamentoBoleto
+Cliente "1" -- "0..*" Avaliacao : escreve
+Avaliacao "0..*" --> "1" Loja : avalia
+Usuario *-- "0..1" Endereco
+Loja *-- "0..1" Endereco
+Entrega *-- "0..1" Endereco : destino
+@enduml

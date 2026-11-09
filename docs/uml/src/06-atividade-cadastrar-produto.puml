@@ -1,0 +1,23 @@
+@startuml
+title Diagrama de Atividades - Cadastrar Produto
+skinparam shadowing false
+skinparam defaultFontName Arial
+|Vendedor|
+start
+:Acessa a área de cadastro de produto;
+repeat
+  :Preenche nome, foto, descrição,\npreço e se permite personalização;
+  |Sistema|
+  :Valida os dados do produto;
+  if (dados válidos?) then (não)
+    :Exibe mensagem de erro;
+  endif
+  |Vendedor|
+repeat while (dados válidos?) is (não) not (sim)
+|Sistema|
+:Salva o produto na loja do vendedor;
+:Confirma o cadastro;
+|Vendedor|
+:Visualiza mensagem de sucesso;
+stop
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+title Detalhe SOLID - OCP no pagamento (camada de serviço)
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontName Arial
+hide empty members
+
+class PagamentoController
+class PagamentoService {
+  + pagar(clienteId, pedidoId, request)
+  + confirmarBoleto(vendedorId, pagamentoId)
+}
+interface PagamentoCriador <<estratégia>> {
+  + tipo(): TipoPagamento
+  + criar(pedido, dados): PagamentoBase
+}
+class PixCriador
+class CartaoCriador
+class BoletoCriador
+interface Pagamento {
+  + processarPagamento(valor)
+}
+abstract class PagamentoBase
+class PagamentoPix
+class PagamentoCartao
+class PagamentoBoleto
+class Pedido
+
+PagamentoController --> PagamentoService
+PagamentoService --> "0..*" PagamentoCriador : escolhe pelo tipo
+PagamentoCriador <|.. PixCriador
+PagamentoCriador <|.. CartaoCriador
+PagamentoCriador <|.. BoletoCriador
+PixCriador ..> PagamentoPix : cria
+CartaoCriador ..> PagamentoCartao : cria
+BoletoCriador ..> PagamentoBoleto : cria
+Pagamento <|.. PagamentoBase
+PagamentoBase <|-- PagamentoPix
+PagamentoBase <|-- PagamentoCartao
+PagamentoBase <|-- PagamentoBoleto
+PagamentoService ..> Pedido : confirma após aprovação
+note bottom of PagamentoCriador
+  Nova forma de pagamento = nova entidade
+  + novo Criador (@Component).
+  PagamentoService não é alterado.
+end note
+@enduml

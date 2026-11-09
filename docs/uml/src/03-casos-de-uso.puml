@@ -1,0 +1,65 @@
+@startuml
+title Diagrama de Casos de Uso - IFlower
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+actor Usuario as U
+actor Cliente as C
+actor Vendedor as V
+C --|> U
+V --|> U
+
+rectangle "Sistema IFlower" {
+  usecase "Cadastrar usuário" as UC01
+  usecase "Fazer login" as UC02
+  usecase "Gerenciar dados da conta" as UC03
+
+  usecase "Consultar lojas próximas" as UC04
+  usecase "Pesquisar loja por nome" as UC05
+  usecase "Visualizar produtos da loja" as UC06
+  usecase "Gerenciar carrinho" as UC07
+  usecase "Adicionar produto ao carrinho" as UC08
+  usecase "Finalizar compra" as UC09
+  usecase "Selecionar entrega ou retirada,\ndata e horário" as UC10
+  usecase "Realizar pagamento" as UC11
+  usecase "Acompanhar pedido" as UC12
+  usecase "Consultar histórico de pedidos" as UC13
+  usecase "Cancelar pedido" as UC14
+  usecase "Avaliar loja" as UC15
+  usecase "Gerenciar avaliação" as UC16
+
+  usecase "Cadastrar produto" as UC17
+  usecase "Gerenciar produtos" as UC18
+  usecase "Consultar pedidos da loja" as UC19
+  usecase "Atualizar status do pedido" as UC20
+  usecase "Gerenciar perfil da loja" as UC21
+  usecase "Confirmar pagamento de boleto" as UC22
+}
+
+U --> UC01
+U --> UC02
+U --> UC03
+
+C --> UC04
+C --> UC05
+C --> UC06
+C --> UC07
+C --> UC08
+C --> UC09
+C --> UC12
+C --> UC13
+C --> UC14
+C --> UC15
+C --> UC16
+
+V --> UC17
+V --> UC18
+V --> UC19
+V --> UC20
+V --> UC21
+V --> UC22
+
+UC09 .> UC10 : <<include>>
+UC09 .> UC11 : <<include>>
+@enduml
