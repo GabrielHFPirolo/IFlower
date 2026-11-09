@@ -1,5 +1,6 @@
 package com.iflower.model.pagamento;
 
+<<<<<<< HEAD
 import com.iflower.model.Pedido;
 import com.iflower.model.enums.StatusPagamento;
 import jakarta.persistence.Column;
@@ -75,4 +76,31 @@ public abstract class PagamentoBase implements Pagamento {
     public BigDecimal getValor() { return valor; }
     public StatusPagamento getStatus() { return status; }
     public LocalDateTime getDataPagamento() { return dataPagamento; }
+=======
+public abstract class PagamentoBase implements Pagamento {
+
+    private int id;
+    private int pedidoId;
+
+    public PagamentoBase(int id, int pedidoId) {
+        this.id = id;
+        this.pedidoId = pedidoId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPedidoId() {
+        return pedidoId;
+    }
+
+    public void setPedidoId(int pedidoId) {
+        this.pedidoId = pedidoId;
+    }
+>>>>>>> 30e1cb06bcc198f0b560a7b5897187a186905d87
 }

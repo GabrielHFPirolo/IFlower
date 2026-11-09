@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- =====================================================================
 -- IFlower - dados de exemplo (senha de TODOS os usuários: Senha@123)
 -- Hash gerado com pgcrypto (bcrypt $2a$), compatível com o BCryptPasswordEncoder do Spring.
@@ -49,3 +50,6 @@ SELECT setval(pg_get_serial_sequence('item_pedido', 'id'), (SELECT MAX(id) FROM 
 SELECT setval(pg_get_serial_sequence('entrega', 'id'),   (SELECT MAX(id) FROM entrega));
 SELECT setval(pg_get_serial_sequence('pagamento', 'id'), (SELECT MAX(id) FROM pagamento));
 SELECT setval(pg_get_serial_sequence('avaliacao', 'id'), (SELECT MAX(id) FROM avaliacao));
+=======
+-- Dados de exemplo (a preencher)
+>>>>>>> 30e1cb06bcc198f0b560a7b5897187a186905d87

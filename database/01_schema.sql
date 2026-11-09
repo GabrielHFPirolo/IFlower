@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- =====================================================================
 -- IFlower - DDL (PostgreSQL 16)
 -- Deve permanecer em sincronia com as entidades JPA (ddl-auto=validate).
@@ -142,3 +143,6 @@ CREATE INDEX idx_pedido_loja        ON pedido (loja_id, data_pedido DESC);
 CREATE INDEX idx_item_pedido_pedido ON item_pedido (pedido_id);
 CREATE INDEX idx_pagamento_pedido   ON pagamento (pedido_id);
 CREATE INDEX idx_avaliacao_loja     ON avaliacao (loja_id);
+=======
+-- DDL do IFlower (a preencher na modelagem do banco)
+>>>>>>> 30e1cb06bcc198f0b560a7b5897187a186905d87
