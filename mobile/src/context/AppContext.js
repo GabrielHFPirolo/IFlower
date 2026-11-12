@@ -6,7 +6,7 @@ import { authService, carrinhoService, usuarioService } from '../services';
 const AppContext = createContext(null);
 export const useApp = () => useContext(AppContext);
 
-const STORAGE_KEY = 'iflowey.token';
+const STORAGE_KEY = 'iflower.token';
 
 const readToken = async () => {
   try {

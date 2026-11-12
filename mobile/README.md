@@ -1,4 +1,4 @@
-# 🌸 IFlowey
+# 🌸 IFlower
 
 Clone do iFood com temática de flores, feito em **React Native (Expo SDK 58)** e integrado ao backend
 **Java / Spring Boot** do repositório [IFlower](https://github.com/GabrielHFPirolo/IFlower)

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useApp } from '../context/AppContext';
 import { API_URL } from '../services/api';
@@ -36,8 +36,12 @@ export default function LoginScreen({ navigation }) {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.hero}>
-            <Text style={{ fontSize: 56 }}>🌸</Text>
-            <Text style={styles.logo}>IFlowey</Text>
+            <Image
+              source={require('../../assets/logo.png')}
+              style={styles.logo}
+              resizeMode="contain"
+              accessibilityLabel="IFlowey"
+            />
             <Text style={styles.tag}>Flores frescas, entregues com carinho</Text>
           </View>
 
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.bg },
   scroll: { flexGrow: 1, justifyContent: 'center', padding: 24 },
   hero: { alignItems: 'center', marginBottom: 20 },
-  logo: { fontSize: 36, fontWeight: '900', color: colors.primary, letterSpacing: -1 },
+  logo: { width: 180, height: 180 },
   tag: { color: colors.muted, marginTop: 4 },
   form: { maxWidth: 420, width: '100%', alignSelf: 'center' },
   demo: { marginTop: 26, padding: 12, backgroundColor: colors.primarySoft, borderRadius: 12 },
