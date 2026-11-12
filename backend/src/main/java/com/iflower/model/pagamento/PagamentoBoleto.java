@@ -1,6 +1,5 @@
 package com.iflower.model.pagamento;
 
-<<<<<<< HEAD
 import com.iflower.exception.RegraNegocioException;
 import com.iflower.model.Pedido;
 import com.iflower.model.enums.StatusPagamento;
@@ -45,32 +44,4 @@ public class PagamentoBoleto extends PagamentoBase {
     }
 
     public String getCodigoBarras() { return codigoBarras; }
-=======
-public class PagamentoBoleto extends PagamentoBase {
-
-    private String codigoBarras;
-    private double valor;
-
-    public PagamentoBoleto(int id, int pedidoId, String codigoBarras) {
-        super(id, pedidoId);
-        this.codigoBarras = codigoBarras;
-    }
-
-    public String getCodigoBarras() {
-        return codigoBarras;
-    }
-
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    @Override
-    public void processarPagamento(double valor) {
-        this.valor = valor;
-    }
->>>>>>> 30e1cb06bcc198f0b560a7b5897187a186905d87
 }

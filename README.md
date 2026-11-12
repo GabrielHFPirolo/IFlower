@@ -31,38 +31,25 @@ cd mobile && npm install && npx expo start
 ```
 com.iflower
 ├── controller/   recebe requisições HTTP
-<<<<<<< HEAD
 ├── service/      regras de negócio (+ service/pagamento: estratégias OCP)
-=======
-├── service/      regras de negócio
->>>>>>> 30e1cb06bcc198f0b560a7b5897187a186905d87
 ├── repository/   acesso a dados (Spring Data JPA)
 ├── model/        entidades de domínio (M)
 │   ├── pagamento/  OCP: Pagamento, PagamentoBase, Pix, Cartão, Boleto
 │   └── enums/
 ├── dto/          objetos de entrada e saída da API
 ├── exception/    exceções e tratamento global
-<<<<<<< HEAD
 ├── security/     JWT (JwtService, filtro) e usuário autenticado
 ├── validation/   validadores @Cpf e @Cnpj
 ├── config/       SecurityConfig (BCrypt, rotas por perfil, CORS)
 └── util/         Documentos (CPF/CNPJ)
-=======
-├── config/       configurações (CORS, segurança)
-└── util/
->>>>>>> 30e1cb06bcc198f0b560a7b5897187a186905d87
 ```
 No MVC com API REST, a **View** é o app React Native; o backend entrega JSON via DTOs.
 
 ## Princípios SOLID já aplicados
 - **SRP:** `model/Entrega.java`
-<<<<<<< HEAD
 - **OCP:** `model/pagamento/*` + `service/pagamento/PagamentoCriador`
 
 Detalhes, endpoints e regras de negócio: [`backend/README.md`](backend/README.md).
-=======
-- **OCP:** `model/pagamento/*`
->>>>>>> 30e1cb06bcc198f0b560a7b5897187a186905d87
 
 ## Fluxo de trabalho Git
 - `main`: somente código estável (entregas)
